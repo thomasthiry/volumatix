@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evolve11.Volumatix", "Evolve11.Volumatix\Evolve11.Volumatix.csproj", "{5FF3BD7B-43E6-46F3-9A6F-BCEB316D2CD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evolve11.Volumatix.Tests", "Evolve11.Volumatix.Tests\Evolve11.Volumatix.Tests.csproj", "{C9ABC854-DD33-467D-918E-91D91C0F6153}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FF3BD7B-43E6-46F3-9A6F-BCEB316D2CD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FF3BD7B-43E6-46F3-9A6F-BCEB316D2CD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FF3BD7B-43E6-46F3-9A6F-BCEB316D2CD9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{5FF3BD7B-43E6-46F3-9A6F-BCEB316D2CD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FF3BD7B-43E6-46F3-9A6F-BCEB316D2CD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FF3BD7B-43E6-46F3-9A6F-BCEB316D2CD9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C9ABC854-DD33-467D-918E-91D91C0F6153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9ABC854-DD33-467D-918E-91D91C0F6153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9ABC854-DD33-467D-918E-91D91C0F6153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9ABC854-DD33-467D-918E-91D91C0F6153}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4ED8891C-5797-4C16-8631-E1CABB691623}
+	EndGlobalSection
+EndGlobal
