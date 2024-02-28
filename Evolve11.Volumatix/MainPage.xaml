@@ -29,6 +29,12 @@
                 Text="Set volume - Device 1" 
                 Clicked="OnSetVolume1Clicked"
                 HorizontalOptions="Fill" />
+
+            <Button
+                x:Name="SetVolume2"
+                Text="Set volume - Device 2" 
+                Clicked="OnSetVolume2Clicked"
+                HorizontalOptions="Fill" />
             
         </VerticalStackLayout>
     </ScrollView>
