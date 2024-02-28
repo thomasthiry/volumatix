@@ -20,11 +20,19 @@
 
     public partial class MainPage : ContentPage
     {
-        private static DevicePreset DevicePreset1 = new ("192.168.129.1:11000", 20); // Salon
         private static DevicePreset DevicePreset2 = new ("192.168.129.1:11000", 15);
-        private static DevicePreset DevicePreset3 = new ("192.168.129.4:11000", 15); // Cuisine gauche
 
-        private Preset preset1 = new(new List<DevicePreset> { DevicePreset1 });
+        private Preset preset1 = new(new List<DevicePreset>
+        {
+            new ("192.168.129.1:11000", 5),
+            new ("192.168.129.4:11000", 5)
+
+        });
+        private Preset preset2 = new(new List<DevicePreset>
+        {
+            new ("192.168.129.1:11000", 20), 
+            new ("192.168.129.4:11000", 15)
+        });
 
         public MainPage()
         {
@@ -33,12 +41,12 @@
 
         private void OnSetVolume1Clicked(object sender, EventArgs e)
         {
-            PresetManager.Apply(DevicePreset1);
+            PresetManager.Apply(preset1);
         }
 
         private void OnSetVolume2Clicked(object? sender, EventArgs e)
         {
-            PresetManager.Apply(preset1);
+            PresetManager.Apply(preset2);
         }
     }
 
