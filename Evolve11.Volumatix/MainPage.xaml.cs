@@ -28,17 +28,35 @@
         public MainPage()
         {
             InitializeComponent();
-            _preset1 = new(new List<DevicePreset>
+
+            _preset1 = new("Low volume", new List<DevicePreset>
             {
                 new (_speaker1, 5),
                 new (_speaker2, 5)
 
             });
-            _preset2 = new(new List<DevicePreset>
+            _preset2 = new("Normal volume",new List<DevicePreset>
             {
                 new (_speaker1, 20),
                 new (_speaker2, 10)
             });
+            var presets = new List<Preset> { _preset1, _preset2 };
+
+            foreach (var preset in presets)
+            {
+                var button = new Button
+                {
+                    Text = preset.Name,
+                    HorizontalOptions = LayoutOptions.Fill
+                };
+
+                button.Clicked += (s, e) =>
+                {
+                    PresetManager.Apply(preset);
+                };
+
+                PresetsVerticalStackLayout.Children.Add(button);
+            }
         }
 
         private void OnSetVolume1Clicked(object sender, EventArgs e)
@@ -69,9 +87,11 @@
     public class Preset
     {
         public List<DevicePreset> DevicePresets { get; }
+        public string Name { get; set; }
 
-        public Preset(List<DevicePreset> devicePresets)
+        public Preset(string name, List<DevicePreset> devicePresets)
         {
+            Name = name;
             DevicePresets = devicePresets;
         }
     }

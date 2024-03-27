@@ -4,7 +4,7 @@
              x:Class="Evolve11.Volumatix.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout
+        <VerticalStackLayout x:Name="PresetsVerticalStackLayout"
             Padding="30,0"
             Spacing="25">
             <Image
@@ -12,30 +12,6 @@
                 HeightRequest="185"
                 Aspect="AspectFit"
                 SemanticProperties.Description="dot net bot in a race car number eight" />
-
-            <Label
-                Text="Hello, Jean-Michel and Thomas!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
-
-            <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-
-            <Button
-                x:Name="SetVolume1"
-                Text="Set volume - Device 1" 
-                Clicked="OnSetVolume1Clicked"
-                HorizontalOptions="Fill" />
-
-            <Button
-                x:Name="SetVolume2"
-                Text="Set volume - Device 2" 
-                Clicked="OnSetVolume2Clicked"
-                HorizontalOptions="Fill" />
-            
         </VerticalStackLayout>
     </ScrollView>
 
