@@ -1,4 +1,6 @@
-﻿namespace Evolve11.Volumatix
+﻿using Newtonsoft.Json;
+
+namespace Evolve11.Volumatix
 {
     public class PresetManager
     {
@@ -20,27 +22,13 @@
 
     public partial class MainPage : ContentPage
     {
-        Speaker _speaker1 = new("Salon", "192.168.129.1", 11000);
-        Speaker _speaker2 = new("Salle à manger", "192.168.129.4", 11000);
-        private readonly Preset _preset1;
-        private readonly Preset _preset2;
+        private static readonly Dictionary<string, Speaker> _speakers = new();
 
         public MainPage()
         {
             InitializeComponent();
 
-            _preset1 = new("Low volume", new List<DevicePreset>
-            {
-                new (_speaker1, 5),
-                new (_speaker2, 5)
-
-            });
-            _preset2 = new("Normal volume",new List<DevicePreset>
-            {
-                new (_speaker1, 20),
-                new (_speaker2, 10)
-            });
-            var presets = new List<Preset> { _preset1, _preset2 };
+            var presets = LoadPresets();
 
             foreach (var preset in presets)
             {
@@ -59,57 +47,89 @@
             }
         }
 
-        private void OnSetVolume1Clicked(object sender, EventArgs e)
+        private static List<Preset> LoadPresets()
         {
-            PresetManager.Apply(_preset1);
-        }
+            Speaker speaker1 = new("Salon", "192.168.129.1", 11000);
+            Speaker speaker2 = new("Salle à manger", "192.168.129.4", 11000);
+            _speakers.Add(speaker1.Host, speaker1);
+            _speakers.Add(speaker2.Host, speaker2);
 
-        private void OnSetVolume2Clicked(object? sender, EventArgs e)
+            var json = @"{
+                    ""presets"": [
+                        {
+                            ""name"": ""Matin"",
+                            ""devicePresets"": [
+                                {
+                                    ""volume"": 15,
+                                    ""deviceHost"": ""192.168.129.1""
+                                }
+                            ]
+                        }
+                    ]
+                }";
+
+            return DeserializePresets(json);
+        }
+        static List<Preset> DeserializePresets(string json)
         {
-            PresetManager.Apply(_preset2);
+            var jsonObject = JsonConvert.DeserializeObject<RootObjectDto>(json);
+            var presets = new List<Preset>();
+
+            foreach (var presetData in jsonObject.Presets)
+            {
+                var devicePresets = new List<DevicePreset>();
+                foreach (var devicePresetData in presetData.DevicePresets)
+                {
+                    var speaker = _speakers[devicePresetData.DeviceHost];
+                    var devicePreset = new DevicePreset(speaker, devicePresetData.Volume);
+                    devicePresets.Add(devicePreset);
+                }
+                var preset = new Preset(presetData.Name, devicePresets);
+                presets.Add(preset);
+            }
+
+            return presets;
         }
     }
 
-    public class Speaker
+    public class RootObjectDto
+    {
+        public List<PresetDataDto> Presets { get; set; }
+    }
+
+    public class PresetDataDto
+    {
+        public string Name { get; set; }
+        public List<DevicePresetDataDto> DevicePresets { get; set; }
+    }
+
+    public class DevicePresetDataDto
+    {
+        public int Volume { get; set; }
+        public string DeviceHost { get; set; }
+    }
+
+    public class PresetDto
     {
         public string Name { get; }
-        public string Host { get; }
-        public int Port { get; }
+        public List<DevicePresetDto> DevicePresets { get; }
 
-        public Speaker(string name, string host, int port)
-        {
-            Name = name;
-            Host = host;
-            Port = port;
-        }
-    }
-
-    public class Preset
-    {
-        public List<DevicePreset> DevicePresets { get; }
-        public string Name { get; set; }
-
-        public Preset(string name, List<DevicePreset> devicePresets)
+        public PresetDto(string name, List<DevicePresetDto> devicePresets)
         {
             Name = name;
             DevicePresets = devicePresets;
         }
     }
 
-    public class DevicePreset
+    public class DevicePresetDto
     {
-        public DevicePreset(string host, int volume)
-        {
-            Host = host;
-            Volume = volume;
-        }
-        public DevicePreset(Speaker device, int volume)
-        {
-            Host = $"{device.Host}:{device.Port}";
-            Volume = volume;
-        }
-
-        public string Host { get; }
+        public string Device { get; }
         public int Volume { get; }
+
+        public DevicePresetDto(string device, int volume)
+        {
+            Device = device;
+            Volume = volume;
+        }
     }
 }
