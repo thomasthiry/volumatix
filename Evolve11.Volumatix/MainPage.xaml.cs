@@ -20,33 +20,49 @@
 
     public partial class MainPage : ContentPage
     {
-        private static DevicePreset DevicePreset2 = new ("192.168.129.1:11000", 15);
-
-        private Preset preset1 = new(new List<DevicePreset>
-        {
-            new ("192.168.129.1:11000", 5),
-            new ("192.168.129.4:11000", 5)
-
-        });
-        private Preset preset2 = new(new List<DevicePreset>
-        {
-            new ("192.168.129.1:11000", 20), 
-            new ("192.168.129.4:11000", 15)
-        });
+        Speaker _speaker1 = new("Salon", "192.168.129.1", 11000);
+        Speaker _speaker2 = new("Salle à manger", "192.168.129.4", 11000);
+        private readonly Preset _preset1;
+        private readonly Preset _preset2;
 
         public MainPage()
         {
             InitializeComponent();
+            _preset1 = new(new List<DevicePreset>
+            {
+                new (_speaker1, 5),
+                new (_speaker2, 5)
+
+            });
+            _preset2 = new(new List<DevicePreset>
+            {
+                new (_speaker1, 20),
+                new (_speaker2, 10)
+            });
         }
 
         private void OnSetVolume1Clicked(object sender, EventArgs e)
         {
-            PresetManager.Apply(preset1);
+            PresetManager.Apply(_preset1);
         }
 
         private void OnSetVolume2Clicked(object? sender, EventArgs e)
         {
-            PresetManager.Apply(preset2);
+            PresetManager.Apply(_preset2);
+        }
+    }
+
+    public class Speaker
+    {
+        public string Name { get; }
+        public string Host { get; }
+        public int Port { get; }
+
+        public Speaker(string name, string host, int port)
+        {
+            Name = name;
+            Host = host;
+            Port = port;
         }
     }
 
@@ -65,6 +81,11 @@
         public DevicePreset(string host, int volume)
         {
             Host = host;
+            Volume = volume;
+        }
+        public DevicePreset(Speaker device, int volume)
+        {
+            Host = $"{device.Host}:{device.Port}";
             Volume = volume;
         }
 
