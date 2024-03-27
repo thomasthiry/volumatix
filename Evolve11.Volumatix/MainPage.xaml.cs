@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Text;
 
 namespace Evolve11.Volumatix
 {
@@ -60,13 +61,36 @@ namespace Evolve11.Volumatix
                             ""name"": ""Matin"",
                             ""devicePresets"": [
                                 {
-                                    ""volume"": 15,
+                                    ""volume"": 5,
                                     ""deviceHost"": ""192.168.129.1""
+                                },
+                                {
+                                    ""volume"": 5,
+                                    ""deviceHost"": ""192.168.129.4""
+                                }
+                            ]
+                        },
+                        {
+                            ""name"": ""Soir"",
+                            ""devicePresets"": [
+                                {
+                                    ""volume"": 10,
+                                    ""deviceHost"": ""192.168.129.1""
+                                },
+                                {
+                                    ""volume"": 15,
+                                    ""deviceHost"": ""192.168.129.4""
                                 }
                             ]
                         }
                     ]
                 }";
+
+            using (var filestream = new FileStream(Path.Combine(FileSystem.CacheDirectory, "volumatix.presets.json"), FileMode.Create))
+            {
+                var data = Encoding.UTF8.GetBytes(json);
+                filestream.WriteAsync(data, 0, data.Length).GetAwaiter().GetResult();
+            }
 
             return DeserializePresets(json);
         }
